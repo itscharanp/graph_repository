@@ -1,0 +1,49 @@
+package graphs_implementation;
+import java.util.*;
+public class Graphs_implementation {
+    
+    
+    public static void printhelper(int edges[][], int sv, boolean visited[])
+    {
+        System.out.print(sv+" ");
+        visited[sv] = true;
+        int n = edges.length;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(edges[sv][i] == 1 && !visited[i])
+            {
+                printhelper(edges, i,visited);
+            }
+            
+        }
+    }    
+    
+    public static void print(int edges[][], int sv)
+    {
+        boolean visited[] = new boolean[edges.length];   
+        printhelper(edges,sv,visited);
+    }
+    
+    
+    
+    public static void main(String[] args) {
+     
+        int n;
+        int e;
+        Scanner in = new Scanner(System.in);
+         n = in.nextInt();
+         e = in.nextInt();
+         int edgmatrix[][] = new int[n][n];
+         
+         for(int i=0;i<e;i++)
+         {
+             int fv = in.nextInt();
+             int sv = in.nextInt();
+             edgmatrix[fv][sv] = 1;
+             edgmatrix[sv][fv] = 1;
+         }
+         //Printing the graph  
+         print(edgmatrix,0);
+    }
+}
