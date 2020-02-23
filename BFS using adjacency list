@@ -20,32 +20,32 @@ public class Practice3
          {
              adj[v].add(w);
          }
- 
-         void DFSutil(int sn,boolean[] visited)
-         {
-             
-             visited[sn] = true;
-             System.out.print(sn+" ");
-             
-             Iterator<Integer> i = adj[sn].listIterator();
-             
-             while(i.hasNext())
-             {
-                 int n = i.next();
-                 if(!visited[n])
-                 {
-                     DFSutil(n,visited);
-                 }
-
-              } 
-             
-             
-             
-         }        
-         void DFS(int startnode)
+        
+         void BFS(int snode)
          {
              boolean visited[] = new boolean[vertices];
-             DFSutil(startnode,visited);
+             LinkedList<Integer> qu = new LinkedList<>(); 
+             
+             visited[snode] = true;
+             qu.add(snode);
+             
+             while(qu.size() != 0)
+             {
+                 snode = qu.poll();
+                 System.out.print(snode+" ");
+                 Iterator<Integer> i = adj[snode].listIterator();
+                 while(i.hasNext())
+                 {
+                     int n = i.next();
+                     if(!visited[n])
+                     {
+                         visited[n] = true;
+                         qu.add(n);
+                     }
+                 }
+                 
+             }
+             
              
              
          }       
@@ -67,6 +67,25 @@ public class Practice3
            int ev = in.nextInt();
            gh.addEdge(v, ev);
        } 
-       gh.DFS(0);
+       gh.BFS(2);
     }
 }
+
+-------------------------
+*************************
+# output
+run:
+Enter the number of vertices
+4
+Enter the number of edges
+6
+0 1
+0 2
+1 2
+2 0
+2 3
+3 3
+2 0 3 1 BUILD SUCCESSFUL (total time: 21 seconds)
+
+
+
