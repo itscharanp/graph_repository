@@ -1,0 +1,106 @@
+package practice3;
+import java.util.*;
+public class Practice3 
+{ 
+     static class Graph
+     {
+         private int vertices;
+         private LinkedList<Integer> adj[];   
+         Graph(int v)
+         {
+           vertices = v;
+           adj = new LinkedList[v];
+           for(int i=0;i<vertices;++i)
+           {
+               adj[i] = new LinkedList<>(); 
+           }
+         }
+         
+         void addEdge(int v,int w)
+         {
+             adj[v].add(w);
+         }
+        
+         
+         boolean Cyclicutil(int snode,Boolean[] visited,int parent)
+         {
+          visited[snode] = true;
+          
+          Integer i;
+          Iterator<Integer> it = adj[snode].listIterator();
+           
+          while(it.hasNext())
+          {
+              i = it.next();
+              if(!visited[i])
+              {
+                  if(Cyclicutil(i,visited,snode))
+                  {
+                      return true;
+                  }
+              }
+              else if(i != parent)
+              {
+                  return true;
+              }
+              
+              
+          } 
+          
+         return false;
+             
+             
+         }
+         
+         
+         
+         boolean cyclic()
+         {
+                         
+             Boolean visited[] = new Boolean[vertices];
+             for(int i=0;i<visited.length;i++)
+             {
+                 visited[i] = false;
+             }
+             
+             
+             for(int u=0;u<vertices;u++)
+             {       if(!visited[u])
+                      {
+                            if(Cyclicutil(u,visited,-1))
+                            {
+                                return true;
+                            }
+                      }
+                 
+             }
+             return false;    
+         }       
+     }        
+    
+    
+
+    public static void main(String[] args) 
+    {
+       Scanner in = new Scanner(System.in);
+       System.out.println("Enter the number of vertices");
+       int nv = in.nextInt();
+       Graph gh = new Graph(nv);
+       System.out.println("Enter the number of edges");
+       int edges = in.nextInt();
+       for(int i=0;i<edges;i++)
+       {
+           int v = in.nextInt();
+           int ev = in.nextInt();
+           gh.addEdge(v, ev);
+       } 
+        if(gh.cyclic())
+        {
+            System.out.println("The graph is cyclic");
+        }
+        else
+        {
+            System.out.println("The graph is acyclic ");
+        }
+    }
+}
