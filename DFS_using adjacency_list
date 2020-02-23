@@ -1,72 +1,89 @@
-// { Driver Code Starts
-//Initial Template for Java
-
-
+package practice3;
 import java.util.*;
-import java.lang.*;
-import java.io.*;
+public class Practice3 
+{ 
+     static class Graph
+     {
+         private int vertices;
+         private LinkedList<Integer> adj[];   
+         Graph(int v)
+         {
+           vertices = v;
+           adj = new LinkedList[v];
+           for(int i=0;i<vertices;++i)
+           {
+               adj[i] = new LinkedList<>(); 
+           }
+         }
+         
+         void addEdge(int v,int w)
+         {
+             adj[v].add(w);
+         }
+ 
+         void DFSutil(int sn,boolean[] visited)
+         {
+             
+             visited[sn] = true;
+             System.out.print(sn+" ");
+             
+             Iterator<Integer> i = adj[sn].listIterator();
+             
+             while(i.hasNext())
+             {
+                 int n = i.next();
+                 if(!visited[n])
+                 {
+                     DFSutil(n,visited);
+                 }
 
-class Driverclass
-{
-    public static void main(String args[])
+              } 
+             
+             
+             
+         }        
+         void DFS(int startnode)
+         {
+             boolean visited[] = new boolean[vertices];
+             DFSutil(startnode,visited);
+             
+             
+         }       
+     }        
+    
+    
+
+    public static void main(String[] args) 
     {
-        Scanner sc = new Scanner(System.in);
-        int t =sc.nextInt();
-        while(t-- > 0)
-        {
-            ArrayList<ArrayList<Integer>> list = new ArrayList<>();
-            int nov = sc.nextInt();
-            int edg  =sc.nextInt();
-            for(int i = 0; i < nov; i++)
-                list.add(i, new ArrayList<Integer>());
-                
-            for(int i = 1; i <= edg; i++)
-            {
-                int u = sc.nextInt();
-                int v = sc.nextInt();
-                list.get(u).add(v);
-                list.get(v).add(u);
-            }
-            boolean vis[] = new boolean[nov];
-            for(int i = 0; i < nov; i++)
-                vis[i] = false;
-            new Traversal().dfs(0, list, vis);
-            System.out.println();
-        }
+       Scanner in = new Scanner(System.in);
+       System.out.println("Enter the number of vertices");
+       int nv = in.nextInt();
+       Graph gh = new Graph(nv);
+       System.out.println("Enter the number of edges");
+       int edges = in.nextInt();
+       for(int i=0;i<edges;i++)
+       {
+           int v = in.nextInt();
+           int ev = in.nextInt();
+           gh.addEdge(v, ev);
+       } 
+       gh.DFS(0);
     }
 }
 
-// } Driver Code Ends
-class Traversal
-{
-    static void dfs(int src, ArrayList<ArrayList<Integer>> list, boolean vis[])
-    {
-       
-        ArrayList<Integer> arr = new ArrayList<>();
-        arr.add(src);
-        
-        while(!arr.isEmpty())
-        {
-           
-           int node = arr.remove(arr.size()-1); 
-           if(!vis[node])   
-           {
-               System.out.print(node + " ");
-               vis[node] = true;
-           }
-           
-           ArrayList<Integer> newlist = list.get(node);
-           
-           for(int i = newlist.size()-1;i>=0;i--)
-           {
-                int j = newlist.get(i);
-                if(!vis[j])
-                {
-                    arr.add(j);
-                }
-           }
-           
-        }
-    }
-}
 
+#output
+Enter the number of vertices
+6
+Enter the number of edges
+
+8
+0 1 
+0 2
+1 3
+1 4
+2 4
+3 4
+3 5
+4 5
+0 1 3 4 5 2 
